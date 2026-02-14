@@ -16,10 +16,11 @@ body {
   font-family: sans-serif;
   flex-direction: column;
   color: white;
+  text-align: center;
 }
 
 h1 {
-  margin-bottom: 40px;
+  margin-top: 30px;
   font-weight: 500;
   transition: opacity 0.5s ease;
 }
@@ -43,7 +44,7 @@ h1 {
   100% { transform: translateY(0px); }
 }
 
-/* 영상 컨테이너 */
+/* 영상 영역 */
 #videoContainer {
   position: fixed;
   top: 0;
@@ -64,37 +65,73 @@ h1 {
   pointer-events: auto;
 }
 
-/* 영상 크기 조절 */
-video {
+.videoWrapper {
+  position: relative;
   width: 60%;
   max-width: 600px;
+}
+
+video {
+  width: 100%;
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+/* ▶ 재생 버튼 */
+.playButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.playButton:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.playButton:after {
+  content: '';
+  border-left: 20px solid white;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  margin-left: 5px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>You have one unread message</h1>
-
-<!-- 🔥 여기 이미지 경로 수정 -->
+<!-- 🔥 이미지가 위 -->
 <img id="envelope" src="envelope.png">
 
+<h1>You have one unread message</h1>
+
 <div id="videoContainer">
-  <video id="myVideo" playsinline>
-    <source src="video.mp4" type="video/mp4">
-  </video>
+  <div class="videoWrapper">
+    <video id="myVideo" playsinline>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+    <div class="playButton" id="playButton"></div>
+  </div>
 </div>
 
 <script>
 const envelope = document.getElementById("envelope");
 const videoContainer = document.getElementById("videoContainer");
 const video = document.getElementById("myVideo");
+const playButton = document.getElementById("playButton");
 const title = document.querySelector("h1");
 
-// 편지 클릭
+// 편지 클릭 → 열림 효과 → 영상 등장
 envelope.addEventListener("click", () => {
   envelope.classList.add("open");
   title.style.opacity = "0";
@@ -104,13 +141,15 @@ envelope.addEventListener("click", () => {
   }, 800);
 });
 
-// 영상 클릭 시 재생/정지
-video.addEventListener("click", () => {
-  if (video.paused) {
-    video.play();
-  } else {
-    video.pause();
-  }
+// 재생 버튼 클릭
+playButton.addEventListener("click", () => {
+  video.play();
+  playButton.style.display = "none";
+});
+
+// 영상 끝나면 다시 버튼 표시
+video.addEventListener("ended", () => {
+  playButton.style.display = "flex";
 });
 </script>
 
