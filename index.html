@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>비밀 메시지</title>
+
+  <meta property="og:title" content="🎉 당첨을 축하드립니다!">
+  <meta property="og:description" content="지금 바로 확인하세요">
+  <meta property="og:image" content="https://picsum.photos/400">
+
+</head>
+<body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;background:black;color:white;">
+
+  <h1 id="message"></h1>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
+
+    if(name){
+      document.getElementById("message").innerText =
+        name + "님… 정말 당첨되셨습니다 🎉";
+    } else {
+      document.getElementById("message").innerText =
+        "축하합니다 🎉";
+    }
+
+    setTimeout(() => {
+      document.getElementById("message").innerText =
+        "근데 사실 장난이었어요 😈";
+    }, 3000);
+
+  </script>
+
+</body>
+</html>
