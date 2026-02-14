@@ -4,13 +4,10 @@
 <meta charset="UTF-8">
 <title>Unread Message</title>
 
-<meta property="og:title" content="📩 You have one unread message">
-<meta property="og:description" content="Open it now">
-
 <style>
 body {
   margin: 0;
-  background: #ff5a5f; /* 다홍색 */
+  background: #ff5a5f;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,8 +24,9 @@ h1 {
   transition: opacity 0.5s ease;
 }
 
+/* 봉투 */
 #envelope {
-  width: 160px;
+  width: 180px;
   cursor: pointer;
   animation: float 3s ease-in-out infinite;
   transition: transform 0.6s ease, opacity 0.6s ease;
@@ -45,13 +43,14 @@ h1 {
   100% { transform: translateY(0px); }
 }
 
+/* 영상 컨테이너 */
 #videoContainer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: black;
+  background: rgba(0,0,0,0.85);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,10 +64,12 @@ h1 {
   pointer-events: auto;
 }
 
+/* 영상 크기 조절 */
 video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 60%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   cursor: pointer;
 }
 </style>
@@ -78,7 +79,8 @@ video {
 
 <h1>You have one unread message</h1>
 
-<img id="envelope" src="https://upload.wikimedia.org/wikipedia/commons/5/50/Envelope_icon.png">
+<!-- 🔥 여기 이미지 경로 수정 -->
+<img id="envelope" src="envelope.png">
 
 <div id="videoContainer">
   <video id="myVideo" playsinline>
@@ -92,7 +94,7 @@ const videoContainer = document.getElementById("videoContainer");
 const video = document.getElementById("myVideo");
 const title = document.querySelector("h1");
 
-// 편지 클릭 → 열림 효과 → 영상 등장
+// 편지 클릭
 envelope.addEventListener("click", () => {
   envelope.classList.add("open");
   title.style.opacity = "0";
@@ -102,7 +104,7 @@ envelope.addEventListener("click", () => {
   }, 800);
 });
 
-// 영상 클릭 → 재생 / 일시정지 토글
+// 영상 클릭 시 재생/정지
 video.addEventListener("click", () => {
   if (video.paused) {
     video.play();
